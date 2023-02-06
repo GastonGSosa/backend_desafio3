@@ -14,6 +14,7 @@ class ProductManager {
     constructor(path) {
         this.path = path;
         this.products = [];
+        this.id = 1;
     }
 
     loadProducts() {
@@ -42,8 +43,11 @@ class ProductManager {
             console.log("Este elemento ya esta dentro." + product.title + product.code)
         }
         else {
+            product.id = this.id;
             this.products.push(product)
-            console.log("se agrego el elemento de titulo: "+product.title)
+            this.id++;
+            console.log("se agrego el elemento de titulo: "+product.title);
+            console.log("El ID del producto es: ",product.id);
             this.saveProducts()
         }
     }
@@ -99,9 +103,9 @@ class ProductManager {
 //TESTEO
 
 //instancio unos productos
-const productTest1 = {id:1,title:"producto prueba",description:"este es un producto prueba", price:200, thumbnail:"sin imagen", code:"abc123", stock:25};
-const productTest2 = {id:2,title:"producto prueba2",description:"este es un producto prueba2", price:250, thumbnail:"sin imagen2", code:"abc456", stock:10};
-const productTest3 = {id:3,title:"producto prueba3",description:"este es un producto prueba3", price:300, thumbnail:"sin imagen3", code:"abc789", stock:15};
+const productTest1 = {title:"producto prueba",description:"este es un producto prueba", price:200, thumbnail:"sin imagen", code:makeUniqueCode(8), stock:25};
+const productTest2 = {title:"producto prueba2",description:"este es un producto prueba2", price:250, thumbnail:"sin imagen2", code:makeUniqueCode(8), stock:10};
+const productTest3 = {title:"producto prueba3",description:"este es un producto prueba3", price:300, thumbnail:"sin imagen3", code:makeUniqueCode(8), stock:15};
 
 //INSTANCIO EL PRODUCTMANAGER y luego guardo en un json
 const pruebaProductManager = new ProductManager("products.json")
@@ -116,7 +120,8 @@ console.log(pruebaProductManager.getProducts())
 
 console.log("*******************Testeo el ProductManager con producto 1***********************")
 pruebaProductManager.addProduct(productTest1);
-console.log(pruebaProductManager.getProducts())
+console.log(productTest1.code);
+console.log(pruebaProductManager.getProducts());
 
 console.log("*******************Chequeo llamar al producto por id***********************")
 console.log(pruebaProductManager.getProductById(1))
